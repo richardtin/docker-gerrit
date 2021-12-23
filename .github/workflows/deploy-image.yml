@@ -17,6 +17,10 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        context: [3.3]
+        version: [3.3.6]
     permissions:
       contents: read
       packages: write
@@ -35,38 +39,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push gerrit 3.3.x image
-        env:
-          GERRIT_VERSION: 3.3.6
+      - name: Build and push gerrit images
         uses: docker/build-push-action@v2
         with:
-          context: 3.3
-          file: 3.3/Dockerfile
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
-          cache-to: type=inline
-
-      - name: Build and push gerrit 3.4.x image
-        env:
-          GERRIT_VERSION: 3.4.2
-        uses: docker/build-push-action@v2
-        with:
-          context: 3.4
-          file: 3.4/Dockerfile
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
-          cache-to: type=inline
-
-      - name: Build and push gerrit 3.5.x image
-        env:
-          GERRIT_VERSION: 3.5.0.1
-        uses: docker/build-push-action@v2
-        with:
-          context: 3.5
-          file: 3.5/Dockerfile
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$GERRIT_VERSION
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.version }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.version }}
           cache-to: type=inline
