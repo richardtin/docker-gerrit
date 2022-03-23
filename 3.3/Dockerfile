@@ -4,7 +4,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 ENV GERRIT_HOME /var/gerrit
 ENV GERRIT_SITE ${GERRIT_HOME}/review_site
 ENV GERRIT_WAR ${GERRIT_HOME}/gerrit.war
-ENV GERRIT_VERSION 3.3.6
+ENV GERRIT_VERSION 3.3.10
 ENV GERRIT_USER gerrit2
 ENV GERRIT_INIT_ARGS "--install-plugin=delete-project --install-plugin=gitiles --install-plugin=plugin-manager"
 
@@ -34,7 +34,7 @@ RUN curl -fSsL \
 
 #oauth2
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-oauth-bazel-master-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/oauth/oauth.jar \
+    ${GERRITFORGE_URL}/job/plugin-oauth-bazel-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/oauth/oauth.jar \
     -o ${GERRIT_HOME}/oauth.jar
 
 #importer
