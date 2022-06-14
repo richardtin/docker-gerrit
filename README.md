@@ -1,85 +1,35 @@
 # Gerrit Docker image
 
-[![Docker Stars](https://img.shields.io/docker/stars/openfrontier/gerrit.svg)](https://hub.docker.com/r/openfrontier/gerrit/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/openfrontier/gerrit.svg)](https://hub.docker.com/r/openfrontier/gerrit/)
-[![Docker Automated build](https://img.shields.io/docker/automated/openfrontier/gerrit.svg)](https://hub.docker.com/r/openfrontier/gerrit/)
-
  The Gerrit code review system with external database and OpenLDAP integration.
- This image is based on the openjdk:jre-alpine or the openjdk:jre-slim which makes this image small and fast.
-
-## Branches and Tags
-
- The `latest` is not production ready because new features will be tested on it first.
- The branch tags like `2.14.x` or `2.15.x` are used to track the releases of Gerrit. Approved new features will be merged to these branches first then included in the next [release](https://github.com/openfrontier/docker-gerrit/releases).
+ This image is based on the `adoptopenjdk/openjdk11:alpine-jre` which makes this image small and fast.
 
 #### Alpine base
 
- * openfrontier/gerrit:latest -> 3.3.2
- * openfrontier/gerrit:3.2.x -> 3.2.7
- * openfrontier/gerrit:3.1.x -> 3.1.12
- * openfrontier/gerrit:3.0.x  -> 3.0.15
- * openfrontier/gerrit:2.16.x -> 2.16.26
- * openfrontier/gerrit:2.15.x -> 2.15.18
- * openfrontier/gerrit:2.14.x -> 2.14.20
- * openfrontier/gerrit:2.13.x -> 2.13.14
- * openfrontier/gerrit:2.12.x -> 2.12.7
- * openfrontier/gerrit:2.11.x -> 2.11.10
- * openfrontier/gerrit:2.10.x -> 2.10.6
-
-#### Debian base
-
- * openfrontier/gerrit:2.15.x-slim -> 2.15.18
- * openfrontier/gerrit:2.14.x-slim -> 2.14.20
-
-## Migrate from ReviewDB to NoteDB
-  Since Gerrit 2.16, [NoteDB](https://gerrit-review.googlesource.com/Documentation/note-db.html) is required to store accounts and groups data.
-  Changes are strongly advised to migrate to NoteDB, too.
-  Accounts and Groups are migrated offline to NoteDB automatically during the start up of the container.
-  Change data can be migrated to NoteDB offline via the `MIGRATE_TO_NOTEDB_OFFLINE` environment variable.
-  Note that migrating changes can takes about twice as long as an offline reindex. In fact, one of the
-  migration steps is a full reindex, so it can't possibly take less time.
-
-  ```shell
-    docker run \
-        -e MIGRATE_TO_NOTEDB_OFFLINE=true \
-        -v ~/gerrit_volume:/var/gerrit/review_site \
-        -p 8080:8080 \
-        -p 29418:29418 \
-        -d openfrontier/gerrit
-  ```
-  Online migration of change data is also available via the `NOTEDB_CHANGES_AUTOMIGRATE` environment variable.
-
-  ```shell
-    docker run \
-        -e NOTEDB_CHANGES_AUTOMIGRATE=true \
-        -v ~/gerrit_volume:/var/gerrit/review_site \
-        -p 8080:8080 \
-        -p 29418:29418 \
-        -d openfrontier/gerrit
-  ```
-  This feature is only available in Gerrit version 2.15 and above.
+* ghcr.io/richardtin/docker-gerrit:3.5.x -> 3.5.2
+* ghcr.io/richardtin/docker-gerrit:3.4.x -> 3.4.2
+* ghcr.io/richardtin/docker-gerrit:3.3.x -> 3.3.10
 
 ## Container Quickstart
 
   1. Initialize and start gerrit.
 
-    docker run -d -p 8080:8080 -p 29418:29418 openfrontier/gerrit
+    docker run -d -p 8080:8080 -p 29418:29418 ghcr.io/richardtin/docker-gerrit
 
   2. Open your browser to http://<docker host url>:8080
 
 ## Use HTTP authentication type
 
-    docker run -d -p 8080:8080 -p 29418:29418 -e AUTH_TYPE=HTTP openfrontier/gerrit
+    docker run -d -p 8080:8080 -p 29418:29418 -e AUTH_TYPE=HTTP ghcr.io/richardtin/docker-gerrit
 
 ## Use another container as the gerrit site storage.
 
   1. Create a volume container.
 
-    docker run --name gerrit_volume openfrontier/gerrit echo "Gerrit volume container."
+    docker run --name gerrit_volume ghcr.io/richardtin/docker-gerrit echo "Gerrit volume container."
 
   2. Initialize and start gerrit using volume created above.
 
-    docker run -d --volumes-from gerrit_volume -p 8080:8080 -p 29418:29418 openfrontier/gerrit
+    docker run -d --volumes-from gerrit_volume -p 8080:8080 -p 29418:29418 ghcr.io/richardtin/docker-gerrit
 
 ## Use a docker named volume as the gerrit site storage.
   **DO NOT** use host volumes in particular directories under the home directory like `~/gerrit` as a gerrit volume!!! Use [named volume](https://success.docker.com/article/different-types-of-volumes) instead!!!
@@ -90,14 +40,14 @@
 
   2. Initialize and start gerrit using the local directory created above.
 
-    docker run -d -v gerrit_volume:/var/gerrit/review_site -p 8080:8080 -p 29418:29418 openfrontier/gerrit
+    docker run -d -v gerrit_volume:/var/gerrit/review_site -p 8080:8080 -p 29418:29418 ghcr.io/richardtin/docker-gerrit
 
 ## Install plugins on start up.
 
   When calling gerrit init --batch, it is possible to list plugins to be installed with --install-plugin=<plugin_name>. This can be done using the GERRIT_INIT_ARGS environment variable. See [Gerrit Documentation](https://gerrit-review.googlesource.com/Documentation/pgm-init.html) for more information.
 
     #Install download-commands plugin on start up
-    docker run -d -p 8080:8080 -p 29418:29418 -e GERRIT_INIT_ARGS='--install-plugin=download-commands' openfrontier/gerrit
+    docker run -d -p 8080:8080 -p 29418:29418 -e GERRIT_INIT_ARGS='--install-plugin=download-commands' ghcr.io/richardtin/docker-gerrit
 
 ## Extend this image.
 
@@ -109,7 +59,7 @@
   You can also extend the image with a simple `Dockerfile`. The following example will add some scripts to initialize the container on start up.
 
   ```dockerfile
-  FROM openfrontier/gerrit:latest
+  FROM ghcr.io/richardtin/docker-gerrit:latest
 
   COPY gerrit-create-user.sh /docker-entrypoint-init.d/gerrit-create-user.sh
   COPY gerrit-upload-ssh-key.sh /docker-entrypoint-init.d/gerrit-upload-ssh-key.sh
@@ -139,7 +89,7 @@
     -e AUTH_TYPE=LDAP \
     -e LDAP_SERVER=ldap://ldap.server.address \
     -e LDAP_ACCOUNTBASE=<ldap-basedn> \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Run dockerized gerrit with dockerized PostgreSQL and OpenLDAP.
@@ -166,7 +116,7 @@
     -e AUTH_TYPE=LDAP \
     -e LDAP_SERVER=ldap://ldap.server.address \
     -e LDAP_ACCOUNTBASE=<ldap-basedn> \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Setup sendemail options.
@@ -189,7 +139,7 @@
     -e SMTP_PASS=<smtp password> \
     -e SMTP_CONNECT_TIMEOUT=10sec \
     -e SMTP_FROM=USER \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Setup user options
@@ -206,7 +156,7 @@
     -e WEBURL=http://your.site.domain:8080 \
     -e USER_NAME=gerrit \
     -e USER_EMAIL=gerrit@your.site.domain \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Setup OAUTH options
@@ -238,7 +188,7 @@
     -e OAUTH_BITBUCKET_CLIENT_ID=abcdefg \
     -e OAUTH_BITBUCKET_CLIENT_SECRET=secret123 \
     -e OAUTH_BITBUCKET_FIX_LEGACY_USER_ID=true \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 ## Setup Replication to multiple remotes 
 
@@ -268,7 +218,7 @@
     -e BITBUCKET_CREATE_MISSING_REPOSITORIES=false \
     -e GITHUB_URL=https://${GH_USER}@github.com/${GH_ORG}/${name}.git \
     -e GITHUB_PASSWORD=${GH_PASSWORD} \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Using gitiles instead of gitweb
@@ -279,7 +229,7 @@
     -p 8080:8080 \
     -p 29418:29418 \
     -e GITWEB_TYPE=gitiles \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Restricting download schemes  
@@ -290,7 +240,7 @@
     -p 8080:8080 \
     -p 29418:29418 \
     -e DOWNLOAD_SCHEMES=http ssh \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Setup DEVELOPMENT_BECOME_ANY_ACCOUNT option
@@ -304,7 +254,7 @@ When this is the configured authentication method a hyperlink titled "Become" ap
     -p 8080:8080 \
     -p 29418:29418 \
     -e AUTH_TYPE=DEVELOPMENT_BECOME_ANY_ACCOUNT \
-    -d openfrontier/gerrit
+    -d ghcr.io/richardtin/docker-gerrit
   ```
 
 ## Override the default startup action
@@ -325,24 +275,16 @@ started with `supervise` as follows:
         -v ~/gerrit_volume:/var/gerrit/review_site \
         -p 8080:8080 \
         -p 29418:29418 \
-        -d openfrontier/gerrit
+        -d ghcr.io/richardtin/docker-gerrit
   ```
 
 **NOTE:** Not all init actions make sense for starting Gerrit in a Docker
 container.  Specifically, invoking Gerrit with `start` forks the server
 before returning which will cause the container to exit soon after.
 
-## Sample operational scripts
-
-   An example to demonstrate how to extend this Gerrit image to integrate with Jenkins are located in the [openfrontier/gerrit-ci](https://hub.docker.com/r/openfrontier/gerrit-ci/) .
-
-   A Jenkins docker image with some sample scripts to integrate with this Gerrit image can be pulled from [openfrontier/jenkins](https://hub.docker.com/r/openfrontier/jenkins/).
-
-   There's an [upper project](https://github.com/openfrontier/ci) which privdes sample scripts about how to use this image and a [Jenkins image](https://hub.docker.com/r/openfrontier/jenkins/) to create a Gerrit-Jenkins integration environment. And there's a [compose project](https://github.com/openfrontier/ci-compose) to demonstrate how to utilize docker compose to accomplish the same thing.
-
 ## Sync timezone with the host server.
 
-    docker run -d -p 8080:8080 -p 29418:29418 -v /etc/localtime:/etc/localtime:ro openfrontier/gerrit
+    docker run -d -p 8080:8080 -p 29418:29418 -v /etc/localtime:/etc/localtime:ro ghcr.io/richardtin/docker-gerrit
 
 ## Automatic reindex detection
 
@@ -359,5 +301,5 @@ before returning which will cause the container to exit soon after.
         -v ~/gerrit_volume:/var/gerrit/review_site \
         -p 8080:8080 \
         -p 29418:29418 \
-        -d openfrontier/gerrit
+        -d ghcr.io/richardtin/docker-gerrit
   ```
