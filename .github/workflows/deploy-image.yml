@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        context: [3.3, 3.4, 3.5]
+        context: [3.3, 3.4, 3.5, 3.6]
         include:
           - context: 3.3
             version: 3.3.10
@@ -27,6 +27,8 @@ jobs:
             version: 3.4.4
           - context: 3.5
             version: 3.5.2
+          - context: 3.6
+            version: 3.6.1
     permissions:
       contents: read
       packages: write
