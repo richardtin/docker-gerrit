@@ -8,7 +8,7 @@
 * ghcr.io/richardtin/docker-gerrit:3.6.x -> 3.6.2
 * ghcr.io/richardtin/docker-gerrit:3.5.x -> 3.5.3
 * ghcr.io/richardtin/docker-gerrit:3.4.x -> 3.4.6
-* ghcr.io/richardtin/docker-gerrit:3.3.x -> 3.3.11
+* ghcr.io/richardtin/docker-gerrit:3.3.x -> 3.3.10 (EOL)
 
 ## Container Quickstart
 
