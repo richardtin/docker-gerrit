@@ -5,9 +5,9 @@
 
 #### Alpine base
 
-* ghcr.io/richardtin/docker-gerrit:3.7.x -> 3.7.0
-* ghcr.io/richardtin/docker-gerrit:3.6.x -> 3.6.3
-* ghcr.io/richardtin/docker-gerrit:3.5.x -> 3.5.4
+* ghcr.io/richardtin/docker-gerrit:3.7.x -> 3.7.1
+* ghcr.io/richardtin/docker-gerrit:3.6.x -> 3.6.4
+* ghcr.io/richardtin/docker-gerrit:3.5.x -> 3.5.5
 * ghcr.io/richardtin/docker-gerrit:3.4.x -> 3.4.6
 * ghcr.io/richardtin/docker-gerrit:3.3.x -> 3.3.10 (EOL)
 

@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Create and publish a Docker image
+name: docker-gerrit
 
 on:
   push:
@@ -22,11 +22,11 @@ jobs:
         context: [3.5, 3.6, 3.7]
         include:
           - context: 3.5
-            version: 3.5.4
+            version: 3.5.5
           - context: 3.6
-            version: 3.6.3
+            version: 3.6.4
           - context: 3.7
-            version: 3.7.0
+            version: 3.7.1
     permissions:
       contents: read
       packages: write
