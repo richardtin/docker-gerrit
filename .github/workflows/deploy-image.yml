@@ -26,7 +26,7 @@ jobs:
           - context: 3.6
             version: 3.6.4
           - context: 3.7
-            version: 3.7.1
+            version: 3.7.2
     permissions:
       contents: read
       packages: write
