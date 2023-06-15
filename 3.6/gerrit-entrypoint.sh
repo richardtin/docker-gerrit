@@ -45,6 +45,7 @@ if [ "$1" = "/gerrit-start.sh" ]; then
   # Install external plugins
   # The importer plugin is not ready for 3.0.0 yet.
   su-exec ${GERRIT_USER} cp -f ${GERRIT_HOME}/events-log.jar ${GERRIT_SITE}/plugins/events-log.jar
+  su-exec ${GERRIT_USER} cp -f ${GERRIT_HOME}/reviewers.jar ${GERRIT_SITE}/plugins/reviewers.jar
   #su-exec ${GERRIT_USER} cp -f ${GERRIT_HOME}/importer.jar ${GERRIT_SITE}/plugins/importer.jar
 
   # Provide a way to customise this image
