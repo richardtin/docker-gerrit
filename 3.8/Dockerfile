@@ -28,9 +28,8 @@ ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/bazel-bin/plugins
 
 #events-log
 #This plugin is required by gerrit-trigger plugin of Jenkins.
-# Not ready for 3.8, so use 3.7
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-events-log-bazel-master-stable-3.7/${GERRITFORGE_ARTIFACT_DIR}/events-log/events-log.jar \
+    ${GERRITFORGE_URL}/job/plugin-events-log-bazel-master-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/events-log/events-log.jar \
     -o ${GERRIT_HOME}/events-log.jar
 
 #oauth2
