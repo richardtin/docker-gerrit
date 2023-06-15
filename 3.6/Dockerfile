@@ -37,6 +37,11 @@ RUN curl -fSsL \
     ${GERRITFORGE_URL}/job/plugin-oauth-bazel-master-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/oauth/oauth.jar \
     -o ${GERRIT_HOME}/oauth.jar
 
+#reviewers
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-reviewers-bazel-master-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
+    -o ${GERRIT_HOME}/reviewers.jar
+
 #importer
 # Not ready for 3.0
 #RUN curl -fSsL \
