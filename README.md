@@ -1,13 +1,13 @@
 # Gerrit Docker image
 
- The Gerrit code review system with external database and OpenLDAP integration.
- This image is based on the `adoptopenjdk/openjdk11:alpine-jre` which makes this image small and fast.
+The Gerrit code review system with external database and OpenLDAP integration.
+This image is based on the `adoptopenjdk/openjdk11:alpine-jre` which makes this image small and fast.
 
 #### Alpine base
 
-* ghcr.io/richardtin/docker-gerrit:3.8.x -> 3.8.0
-* ghcr.io/richardtin/docker-gerrit:3.7.x -> 3.7.3
-* ghcr.io/richardtin/docker-gerrit:3.6.x -> 3.6.5
+* ghcr.io/richardtin/docker-gerrit:3.8.x -> 3.8.1
+* ghcr.io/richardtin/docker-gerrit:3.7.x -> 3.7.4
+* ghcr.io/richardtin/docker-gerrit:3.6.x -> 3.6.6
 * ghcr.io/richardtin/docker-gerrit:3.5.x -> 3.5.5 (EOL)
 * ghcr.io/richardtin/docker-gerrit:3.4.x -> 3.4.6 (EOL)
 * ghcr.io/richardtin/docker-gerrit:3.3.x -> 3.3.10 (EOL)

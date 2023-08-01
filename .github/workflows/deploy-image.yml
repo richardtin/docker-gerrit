@@ -22,11 +22,11 @@ jobs:
         context: [3.6, 3.7, 3.8]
         include:
           - context: 3.6
-            version: 3.6.5
+            version: 3.6.6
           - context: 3.7
-            version: 3.7.3
+            version: 3.7.4
           - context: 3.8
-            version: 3.8.0
+            version: 3.8.1
     permissions:
       contents: read
       packages: write
@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push gerrit images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile
