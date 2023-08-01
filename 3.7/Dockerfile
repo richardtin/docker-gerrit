@@ -39,7 +39,7 @@ RUN curl -fSsL \
 
 #reviewers
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-reviewers-bazel-master-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
+    ${GERRITFORGE_URL}/job/plugin-reviewers-bazel-stable-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
     -o ${GERRIT_HOME}/reviewers.jar
 
 #importer
